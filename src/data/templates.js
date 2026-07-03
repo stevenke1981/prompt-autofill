@@ -32,7 +32,9 @@
 /**
  * 樣板系統版本號，每次更新 templates.js 或 banks.js 時請更新此版本號
  */
-export const SYSTEM_DATA_VERSION = "0.7.4";
+import { withDeliverables } from '../constants/deliverables';
+
+export const SYSTEM_DATA_VERSION = "0.7.5";
 
 export const TEMPLATE_WOODEN_ART_XMAS = {
   "zh-tw": `### 雷射切割木質層疊藝術 (Wood Art & Xmas)
@@ -819,7 +821,7 @@ export const TEMPLATE_TAGS = [
  * 4. imageUrl 可以是外部連結，也可以是專案內的 import 資源
  * 5. tags 可以從 TEMPLATE_TAGS 中選擇
  */
-export const INITIAL_TEMPLATES_CONFIG = [
+const RAW_TEMPLATES_CONFIG = [
   {
     id: "tpl_default",
     name: { "zh-tw": "角色概念分解圖", en: "Character Concept Sheet" },
@@ -1140,3 +1142,8 @@ export const INITIAL_TEMPLATES_CONFIG = [
     language: ["zh-tw", "en"]
   }
 ];
+
+export const INITIAL_TEMPLATES_CONFIG = RAW_TEMPLATES_CONFIG.map((template) => ({
+  ...template,
+  content: withDeliverables(template.content),
+}));

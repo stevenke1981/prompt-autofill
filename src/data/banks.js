@@ -829,6 +829,42 @@ export const INITIAL_BANKS = {
       { "zh-tw": "生活：咖啡機、磨豆機、高檔手辦元件、限量書籍", en: "Life: Coffee machine, grinder, high-end figure parts, limited books" },
       { "zh-tw": "運動：網球拍、滑板、滑雪鏡、運動相機、水壺", en: "Sports: Tennis racket, skateboard, ski goggles, action cam, bottle" }
     ]
+  },
+  deliverable_primary: {
+    label: { "zh-tw": "主要交付物", en: "Primary Deliverable" },
+    category: "other",
+    options: [
+      { "zh-tw": "1 張完整成品圖（涵蓋所有指定視覺元素）", en: "1 complete final image (all specified visual elements)" },
+      { "zh-tw": "1 張主視覺圖 + 拆解/細節特寫圖", en: "1 hero image + deconstruction/detail shots" },
+      { "zh-tw": "系列圖集（依模板規格的多張組圖）", en: "Image series (multi-image set per template spec)" }
+    ]
+  },
+  output_format: {
+    label: { "zh-tw": "輸出格式", en: "Output Format" },
+    category: "other",
+    options: [
+      { "zh-tw": "單張 PNG（透明背景可選）", en: "Single PNG (transparent BG optional)" },
+      { "zh-tw": "單張 JPG（高品質，90%+）", en: "Single JPG (high quality, 90%+)" },
+      { "zh-tw": "多張 PNG/JPG 分檔交付", en: "Multiple PNG/JPG files" }
+    ]
+  },
+  output_resolution: {
+    label: { "zh-tw": "解析度/品質", en: "Resolution/Quality" },
+    category: "other",
+    options: [
+      { "zh-tw": "4K（長邊 ≥3840px 或等效）", en: "4K (long edge ≥3840px or equivalent)" },
+      { "zh-tw": "2K（長邊 ≥2560px 或等效）", en: "2K (long edge ≥2560px or equivalent)" },
+      { "zh-tw": "平台推薦高清（依畫幅比例最佳化）", en: "Platform-optimized HD (best for aspect ratio)" }
+    ]
+  },
+  output_count: {
+    label: { "zh-tw": "交付數量", en: "Output Count" },
+    category: "other",
+    options: [
+      { "zh-tw": "1 張", en: "1 image" },
+      { "zh-tw": "9 張（3×3 網格）", en: "9 images (3×3 grid)" },
+      { "zh-tw": "依模板章節完整交付（不省略段落）", en: "Full set per template sections (no omitted parts)" }
+    ]
   }
 };
 
@@ -862,7 +898,17 @@ export const INITIAL_DEFAULTS = {
   position: { "zh-tw": "頂部中央", en: "Top Center" },
   company: { "zh-tw": "任天堂（Nintendo）", en: "Nintendo" },
   ratio: { "zh-tw": "3:4直式構圖", en: "3:4 Vertical" },
-  
+  deliverable_primary: {
+    "zh-tw": "1 張完整成品圖（涵蓋所有指定視覺元素）",
+    en: "1 complete final image (all specified visual elements)",
+  },
+  output_format: { "zh-tw": "單張 PNG（透明背景可選）", en: "Single PNG (transparent BG optional)" },
+  output_resolution: {
+    "zh-tw": "平台推薦高清（依畫幅比例最佳化）",
+    en: "Platform-optimized HD (best for aspect ratio)",
+  },
+  output_count: { "zh-tw": "1 張", en: "1 image" },
+
   // Grid defaults
   grid_pose: { "zh-tw": "前景手指虛化", en: "Out-of-focus fingers in foreground" },
   
