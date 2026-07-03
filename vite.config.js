@@ -16,8 +16,9 @@ export default defineConfig({
   // 讓 Tauri 能夠監聽特定的連接埠
   server: {
     port: 1420,
-    strictPort: true,
-    host: true, // 保持原本的 --host 功能
+    strictPort: false,
+    host: true,
+    open: true,
   },
   // 設置環境變數的前綴，這樣在 Tauri 中可以存取它們
   envPrefix: ['VITE_', 'TAURI_'],

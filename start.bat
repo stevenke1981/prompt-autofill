@@ -1,19 +1,19 @@
 @echo off
 chcp 65001 >nul
-setlocal
+setlocal EnableDelayedExpansion
 
 :: Switch to script directory (Support chinese path)
 cd /d "%~dp0"
 
-title Concept Art Prompt Generator Launcher
+title Prompt Autofill Launcher
 
 echo ==========================================
-echo    Concept Art Prompt Generator
+echo    Prompt Autofill v1.0.0
 echo ==========================================
 echo.
 
 :: 1. Check Node.js
-echo [Step 1/3] Checking Node.js...
+echo [Step 1/4] Checking Node.js...
 where node >nul 2>nul
 if %errorlevel% neq 0 (
     echo.
@@ -21,7 +21,7 @@ if %errorlevel% neq 0 (
     echo Please download and install from: https://nodejs.org/
     echo.
     pause
-    exit /b
+    exit /b 1
 )
 
 :: Detect npm command
@@ -32,11 +32,10 @@ if %errorlevel% equ 0 (
 )
 
 :: 2. Check node_modules
-echo [Step 2/3] Checking dependencies...
+echo [Step 2/4] Checking dependencies...
 set MISSING_DEPS=0
 if not exist "node_modules" set MISSING_DEPS=1
 if exist "node_modules" (
-    :: Check if vite actually exists
     if not exist "node_modules\vite\bin\vite.js" set MISSING_DEPS=1
 )
 
@@ -44,35 +43,43 @@ if %MISSING_DEPS%==1 (
     echo.
     echo [INFO] Dependencies are missing or incomplete.
     echo [INFO] Installing dependencies...
-    echo [INFO] This may take a few minutes...
     echo.
-    
     call %NPM_CMD% install
-    
     if %errorlevel% neq 0 (
         echo.
         echo [ERROR] Installation failed.
-        echo Please check your network connection.
-        echo.
         pause
-        exit /b
+        exit /b 1
     )
     echo [SUCCESS] Dependencies installed.
 ) else (
     echo [INFO] Dependencies found.
 )
 
-:: 3. Start Server
-echo.
-echo [Step 3/3] Starting server...
+:: 3. Free port 1420 if a stale dev server is still running
+echo [Step 3/4] Checking port 1420...
+set PORT_FREED=0
+for /f "tokens=5" %%P in ('netstat -ano ^| findstr ":1420" ^| findstr "LISTENING"') do (
+    if not "%%P"=="0" (
+        echo [INFO] Port 1420 is in use by PID %%P — stopping old server...
+        taskkill /PID %%P /F >nul 2>nul
+        set PORT_FREED=1
+    )
+)
+if !PORT_FREED!==1 (
+    echo [INFO] Waiting for port to be released...
+    timeout /t 2 /nobreak >nul
+)
+
+:: 4. Start Server
+echo [Step 4/4] Starting server...
 echo.
 echo [INFO] The browser should open automatically.
-echo [INFO] If not, please access the URL shown below manually.
+echo [INFO] If not, please open: http://localhost:1420
 echo.
 echo -------------------------------------------------------
 echo.
 
-:: Run vite directly from node_modules using node to ensure it works
 node node_modules\vite\bin\vite.js --host --open
 
 echo.
